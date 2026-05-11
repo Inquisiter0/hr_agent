@@ -162,7 +162,7 @@ h1,h2{{font-family:'DM Serif Display',serif}}
 {cards}
 
 <div class="footer">
-  HR Shortlisting Agent &nbsp;|&nbsp; Llama3 via Ollama &nbsp;|&nbsp; {now}<br>
+  HR Shortlisting Agent &nbsp;|&nbsp; Llama 3.3 via Groq &nbsp;|&nbsp; {now}<br>
   This report is AI-assisted. Final hiring decisions must be made by qualified HR professionals.
 </div>
 </body>

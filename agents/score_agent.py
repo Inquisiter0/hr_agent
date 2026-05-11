@@ -1,6 +1,7 @@
 # score_agent.py
 import os
 import json
+# pyrefly: ignore [missing-import]
 from groq import Groq
 from utils.sanitizer import sanitize_text
 
@@ -40,9 +41,6 @@ total_score formula:
 Recommendation: "Hire" if total_score >= 6.0 else "No Hire"."""
 
 
-from langsmith import traceable
-
-@traceable
 def score_candidate(profile: dict, jd_parsed: dict, model: str = "llama-3.3-70b-versatile") -> dict:
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:

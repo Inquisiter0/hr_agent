@@ -50,7 +50,7 @@ div[data-testid="stSidebar"] { background:#0c0c12 !important; border-right:1px s
 st.markdown("""
 <div class="hero">
   <h1>HR Shortlisting Agent</h1>
-  <p>Llama 3 via Groq &nbsp;|&nbsp; 5-Dimension Rubric Scoring &nbsp;|&nbsp; Human-in-the-Loop</p>
+  <p>Llama 3.3 & 3.1 via Groq &nbsp;|&nbsp; 5-Dimension Rubric Scoring &nbsp;|&nbsp; Human-in-the-Loop</p>
 </div>
 """, unsafe_allow_html=True)
 

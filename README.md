@@ -65,13 +65,12 @@ Recommendation: Hire if total >= 6.0, else No Hire.
 
 | Item | Choice | Rationale |
 |---|---|---|
-| Model | Llama 3 8B (via Groq API) | Groq provides ultra-fast inference speed which is critical for processing multiple resumes concurrently. Llama 3 8B offers an excellent balance of reasoning capability, strict JSON instruction-following, and cost-efficiency compared to heavier models like GPT-4o. |
+| Model | Llama 3.3 70B (via Groq API) | Llama 3.3 70B is chosen as the default model. It provides state-of-the-art open-source reasoning capabilities, highly accurate instruction following for JSON mode, and ultra-fast inference speed via Groq. |
 | Temperature | 0.1 | Low temperature for deterministic structured JSON output |
 
 ### Agent Framework
 
-**Native Python Sequential Pipeline**
-Rather than using heavy abstractions like CrewAI or LangGraph, this project uses a custom, deterministic multi-agent pipeline. For resume screening, a linear "plan-and-execute" style flow is more reliable than a ReAct loop. The output of one agent (e.g., JD Parser) serves as the exact structured context for the next (e.g., Score Agent), making the system highly auditable and easy to debug.
+Custom sequential pipeline using native Python.
 
 ### Resume Parsing
 
@@ -86,9 +85,6 @@ Candidate exports their own profile: LinkedIn → Settings → Data Privacy → 
 
 - Self-contained HTML report
 - JSONL append-only audit log for HR overrides (no database needed)
-
-### Observability (Bonus Feature)
-- **LangSmith**: Integrated for full LLM trace logging, allowing developers to monitor prompt inputs, latency, and token usage for every agent execution.
 
 ---
 
