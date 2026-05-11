@@ -22,12 +22,12 @@ Streamlit UI (app.py)
    ┌────┴────┐
    |         |
 JD Parser   Profile Agent
-(Llama3)    (pdfplumber / python-docx / JSON)
+(Groq API)  (pdfplumber / python-docx / JSON)
    |         |
    └────┬────┘
         |
    Score Agent
-   (Llama3 — 5 dimensions)
+   (Groq API — 5 dimensions)
         |
    Report Agent
    (HTML output)
@@ -141,9 +141,9 @@ hr_agent/
 ├── .env.example
 ├── .gitignore
 ├── agents/
-│   ├── jd_parser.py              # Parses JD into structured requirements via Llama3
+│   ├── jd_parser.py              # Parses JD into structured requirements via Groq API
 │   ├── profile_agent.py          # Parses PDF/DOCX resumes and LinkedIn JSON
-│   ├── score_agent.py            # Scores candidate across 5 dimensions via Llama3
+│   ├── score_agent.py            # Scores candidate across 5 dimensions via Groq API
 │   └── report_agent.py           # Generates HTML report
 ├── utils/
 │   ├── sanitizer.py              # Prompt injection defense
