@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+output/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+session.json       
+sample_data/
+test_score.py
