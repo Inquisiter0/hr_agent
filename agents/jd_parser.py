@@ -24,6 +24,9 @@ Return exactly this structure:
 }"""
 
 
+from langsmith import traceable
+
+@traceable
 def parse_jd(jd_text: str, model: str = "llama-3.3-70b-versatile") -> dict:
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
