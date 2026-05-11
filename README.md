@@ -1,6 +1,6 @@
 # HR Resume & LinkedIn Shortlisting Agent
 
-An AI agent that evaluates candidates against a Job Description using a structured 5-dimension rubric, running entirely locally via Llama 3 + Ollama.
+An AI agent that evaluates candidates against a Job Description using a structured 5-dimension rubric, running via Groq API.
 
 ---
 
@@ -41,18 +41,7 @@ Input → Parse JD → Parse Profiles → Score → Rank → Report → [Human O
 
 ---
 
-## Why No LangChain / CrewAI / AutoGen
 
-The brief lists these as suggested options, not requirements. This project uses a custom sequential pipeline instead, for these reasons:
-
-- LangChain/CrewAI add significant abstraction overhead for a pipeline this linear
-- Each agent here is a single Python module with a clear input/output contract — easier to debug, audit, and explain
-- The agent pattern (ReAct-style sequential execution) is fully implemented: each step reasons over structured input and produces structured output that feeds the next step
-- This is a deliberate architectural choice, documented here as required by the brief
-
-If the evaluator requires a named framework, LangChain can be dropped in as a wrapper around the existing agents without changing any core logic.
-
----
 
 ## Scoring Rubric
 
@@ -76,12 +65,12 @@ Recommendation: Hire if total >= 6.0, else No Hire.
 
 | Item | Choice | Rationale |
 |---|---|---|
-| Model | llama3 (Meta Llama 3 8B) via Ollama | Fully local, zero API cost, no data leaves the machine |
+| Model | Llama 3 8B via Groq | Fast inference, high quality |
 | Temperature | 0.1 | Low temperature for deterministic structured JSON output |
 
 ### Agent Framework
 
-Custom sequential pipeline — see "Why No LangChain" above.
+Custom sequential pipeline using native Python.
 
 ### Resume Parsing
 
@@ -106,10 +95,10 @@ This section is mandatory per the brief and covers all listed risks.
 | Risk | Mitigation |
 |---|---|
 | Prompt Injection | `utils/sanitizer.py` strips 12 injection patterns (ignore instructions, act as, jailbreak, system prompt, etc.) from all user-supplied text before it reaches the LLM. Injection defense is also stated in the system prompt itself. |
-| Data Privacy / PII | All LLM processing is local via Ollama. Zero PII is sent to any cloud service. Override logs store only name and scores, not raw resume text. |
-| API Key Exposure | No cloud API keys used anywhere. Ollama requires no key. `.env.example` provided as template. `.gitignore` excludes `.env` and `output/`. |
+| Data Privacy / PII | LLM processing is handled via Groq. Override logs store only name and scores, not raw resume text. |
+| API Key Exposure | API keys are managed securely via `.env`. `.env.example` provided as template. `.gitignore` excludes `.env` and `output/`. |
 | Hallucination Risk | Structured JSON schema enforced in system prompt. `_validate()` in score_agent.py checks all scores are within [0,10]. Falls back to a safe zero-score result if parsing fails. |
-| Unauthorised Access | Ollama binds to localhost by default. Streamlit can be run with `--server.address localhost`. For production: add `streamlit-authenticator`. |
+| Unauthorised Access | Streamlit can be run with `--server.address localhost`. For production: add `streamlit-authenticator`. |
 | Context Overflow Attack | `sanitize_text()` truncates all input to 12,000 chars. Score agent further truncates candidate text to 6,000 chars. |
 
 ---
@@ -119,8 +108,7 @@ This section is mandatory per the brief and covers all listed risks.
 ### Prerequisites
 
 - Python 3.10+
-- Ollama installed — https://ollama.com
-- Llama3 pulled
+- Groq API Key
 
 ### Steps
 
@@ -128,13 +116,7 @@ This section is mandatory per the brief and covers all listed risks.
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Pull the model (if not already done)
-ollama pull llama3
-
-# 3. Start Ollama
-ollama serve
-
-# 4. Run the app
+# 2. Run the app
 streamlit run app.py
 ```
 
